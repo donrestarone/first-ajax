@@ -7,6 +7,10 @@ document.addEventListener("DOMContentLoaded", function() {
 	var ajaxPingPong = document.getElementById("pingPong");
 	var countButton = document.getElementById("count");
 	var seventhTitle = document.getElementById("titleSeven");
+	var SendRequestButton = document.getElementById("POSTrequestAJAX");
+	var eightTitle = document.getElementById("titleEight");
+	var buttonForCar = document.getElementById("buttonForCar");
+	var lastSection = document.getElementById("step9")
 
 	rootAjax.addEventListener('click', function(){
 		$.ajax({
@@ -59,6 +63,42 @@ document.addEventListener("DOMContentLoaded", function() {
 		})
 	})
 
+	SendRequestButton.addEventListener('click', function(){
+		$.ajax({
+			url: 'http://first-ajax-api.herokuapp.com/time',
+			method: 'GET',
+			dataType: 'text',
+			data: {timezone: 'Europe/Sofia'},
+		}).done(function(data){
+			console.log('sent request successfully');
+			console.log(data);
+			eightTitle.innerText = data;
+		}).fail(function(){
+			console.log('failed to send request');
+		}).always(function(){
+			console.log('attempting to send request');
+		})
+	})
 
+	buttonForCar.addEventListener('click', function(){
+		
+		$.ajax({
+			url: 'http://first-ajax-api.herokuapp.com/a_car',
+			method: 'GET',
+			dataType: 'html',
+		}).done(function(data){
+			
+			var unorderedList = document.createElement('ul');
+			unorderedList.innerHTML = data; 
+			
+			console.log('sent car request successfully');
+			lastSection.append(unorderedList);
+
+		}).fail(function(){
+			console.log('failed to send car request');
+		}).always(function(){
+			console.log('attempting to make ajax call for car');
+		})
+	})
 	
 });
