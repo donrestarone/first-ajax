@@ -21,12 +21,13 @@ document.addEventListener("DOMContentLoaded", function() {
 	})
 
 	ajaxPingPong.addEventListener('click', function(){
+		var pTag = document.createElement('p');
 		$.ajax({
 			url: 'http://first-ajax-api.herokuapp.com/ping',
 			method: 'GET',
 			dataType: 'text',
 		}).done(function(data){
-			var pTag = document.createElement('p');
+			
 			console.log('made request to ping');
 			console.log(data);
 			pTag.innerText = data;
@@ -35,7 +36,9 @@ document.addEventListener("DOMContentLoaded", function() {
 			console.log('failed response to ping');
 			pTag.innerText = 'failed response to ping';
 			sectionTwo.append(pTag);
-		});
+		}).always(function(){
+			console.log('request/response cycle complete')
+		})
 	})
 
 
